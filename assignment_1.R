@@ -32,13 +32,24 @@ full_long <- rbind(ndvi,ndmi,ndsi) %>%
   filter(!is.na(value))
 
 ##### Question 1 #####
-#1 What is the correlation between NDVI and NDMI? - here I want you to
+  #1 What is the correlation between NDVI and NDMI? - here I want you to
 #convert the full_long dataset in to a wide dataset using the 
 #function "spread" and then make a plot that shows the correlation as a
 # function of if the site was burned or not
 
-## Your code here
+## My code here
+full_wide <- spread(full_long, key='data', value='value') %>%
+  filter_if(is.numeric,all_vars(!is.na(.))) %>%
+  mutate(month=month(DateTime),
+         year=year(DateTime))
 
+summer_wide <- filter(full_wide, month %in% c('6','7','8','9'))
+ggplot(summer_wide,aes(x=ndvi,y=ndmi,color=site)) +
+  geom_point() +
+  theme_few() +
+  scale_color_few() +
+  theme(legend.position = c(0.8,0.8))
+       
 ## End Code for Question 1 -----------
 
 
@@ -49,7 +60,25 @@ full_long <- rbind(ndvi,ndmi,ndsi) %>%
 # growth for the following summer? 
 
 
-## Your code here
+## My code here
+avg_ndsi <- full_wide %>%
+  filter(month %in% c(1,2,3,4)) %>%
+  group_by(site,year) %>%
+  summarize(mean_NDSI=mean(ndsi))
+
+avg_ndvi <- full_wide %>%
+  filter(month %in% c(6,7,8)) %>%
+  group_by(site,year) %>%
+  summarize(mean_NDVI=mean(ndvi))
+
+avg_ndvi_ndsi <- avg_ndsi %>%
+  inner_join(avg_ndvi, by=c('site','year'))
+
+ggplot(avg_ndvi_ndsi,aes(x=mean_NDVI,y=mean_NDSI,color=site)) +
+  geom_point() +
+  theme_few() +
+  scale_color_few() +
+  theme(legend.position = c(.15,.85))
 
 ## End code for question 2 -----------------
 
