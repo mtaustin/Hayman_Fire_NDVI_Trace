@@ -61,19 +61,23 @@ ggplot(summer_wide,aes(x=ndvi,y=ndmi,color=site)) +
 
 
 ## My code here
+#Creating an average ndsi
 avg_ndsi <- full_wide %>%
   filter(month %in% c(1,2,3,4)) %>%
   group_by(site,year) %>%
   summarize(mean_NDSI=mean(ndsi))
 
+#creating an average ndvi
 avg_ndvi <- full_wide %>%
   filter(month %in% c(6,7,8)) %>%
   group_by(site,year) %>%
   summarize(mean_NDVI=mean(ndvi))
 
+#combining avg ndvi and ndsi
 avg_ndvi_ndsi <- avg_ndsi %>%
   inner_join(avg_ndvi, by=c('site','year'))
 
+#plot of avg ndvi vs ndsi, by site
 ggplot(avg_ndvi_ndsi,aes(x=mean_NDVI,y=mean_NDSI,color=site)) +
   geom_point() +
   theme_few() +
@@ -88,12 +92,53 @@ ggplot(avg_ndvi_ndsi,aes(x=mean_NDVI,y=mean_NDSI,color=site)) +
 # and burned and unburned? 
 
 ## Your code here
+#creating a new column to show if it is pre- or post-
+avg_ndvi_ndsi$pre_post <- if_else(avg_ndvi_ndsi$year >= 2002, "post-burn", "pre-burn")
 
+#Graph of pre- vs post-burn, and burned/unburned.
+ggplot(avg_ndvi_ndsi,aes(x=mean_NDVI,y=mean_NDSI,color=site)) +
+  geom_point() +
+  theme_few() +
+  scale_color_few() +
+  theme(legend.position = c(.15,.85)) +
+  facet_wrap(~pre_post)
 ## End code for question 3
 
 ###### Question 4 #####
 #What month is the greenest month on average? Does this change in the burned
 # plots after the fire? 
 
+#Taking the mean NDVI per month,  per year. Then breaking it up pre- vs post-burn.
+ndvi_avg <- full_wide %>%
+  group_by(site,month,year) %>%
+  summarize(mean_NDVI=mean(ndvi)) %>%
+  mutate(pre_post = if_else(year >= 2002, "post-burn","pre-burn")) %>%
+  group_by(site,month,pre_post) %>%
+  summarize(mean_ndvi=mean(mean_NDVI))
+
+#Plot of pre- vs post- burn of monthly avg NDVI
+ggplot(ndvi_avg,aes(x=month,y=mean_ndvi,color=site))+
+  geom_point() +
+  theme_few() +
+  scale_color_few() +
+  theme(legend.position=c(.8,.2)) +
+  facet_wrap(~pre_post) +
+  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
 ##### Question 5 ####
 #What month is the snowiest on average?
+
+#pre and post ndsi per month.
+ndsi_avg <- full_wide %>%
+  group_by(site,month,year) %>%
+  summarize(mean_NDSI=mean(ndsi)) %>%
+  mutate(pre_post = if_else(year >= 2002, "post-burn","pre-burn")) %>%
+  group_by(site,month,pre_post) %>%
+  summarize(mean_ndsi=mean(mean_NDSI))
+
+ggplot(ndsi_avg,aes(x=month,y=mean_ndsi,color=site))+
+  geom_point() +
+  theme_few() +
+  scale_color_few() +
+  theme(legend.position=c(.8,.2)) +
+  facet_wrap(~pre_post) +
+  scale_x_continuous(breaks=c(1,2,3,4,5,6,7,8,9,10,11,12))
