@@ -1,0 +1,339 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Snow cover impacts on watershed discharge},
+            pdfauthor={Miles Austin},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Snow cover impacts on watershed discharge}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Miles Austin}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{9/10/2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{how-do-remotely-sensed-snow-cover-metrics-impact-discharge-in-the-same-wate-year-in-central-colorado}{%
+\section{How do remotely sensed snow cover metrics impact discharge in
+the same wate year in central
+Colorado?}\label{how-do-remotely-sensed-snow-cover-metrics-impact-discharge-in-the-same-wate-year-in-central-colorado}}
+
+\hypertarget{data-checking}{%
+\subsection{Data checking}\label{data-checking}}
+
+\hypertarget{data-read-in}{%
+\subsubsection{Data read in}\label{data-read-in}}
+
+First we need to get our snow metric (ndsi) data and then also download
+discharge data from the USGS
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse) }
+\KeywordTok{library}\NormalTok{(lubridate)}
+\KeywordTok{library}\NormalTok{(dataRetrieval) }\CommentTok{#for downloading USGS data}
+
+
+\CommentTok{#ndsi }
+\NormalTok{ndsi <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{'data/hayman_ndsi.csv'}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{burned=}\DecValTok{2}\NormalTok{,}\DataTypeTok{unburned=}\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(burned),}
+         \OperatorTok{!}\KeywordTok{is.na}\NormalTok{(unburned)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{gather}\NormalTok{(.,}\DataTypeTok{key=}\StringTok{'site'}\NormalTok{,}
+         \DataTypeTok{value=}\StringTok{'ndsi'}\NormalTok{,}
+         \OperatorTok{-}\NormalTok{DateTime) }\CommentTok{# For this analysis we want the data in long format}
+  
+  
+\CommentTok{#USGS gauge above cheeseman lake '00060'}
+\NormalTok{q_hayman <-}\StringTok{ }\KeywordTok{readNWISdata}\NormalTok{(}\DataTypeTok{sites=}\KeywordTok{c}\NormalTok{(}\StringTok{'06700000'}\NormalTok{), }\CommentTok{#Site code }
+                  \DataTypeTok{parameterCd=}\StringTok{'00060'}\NormalTok{, }\CommentTok{#discharge code in cfs}
+                  \DataTypeTok{service=}\StringTok{'dv'}\NormalTok{, }\CommentTok{# service = daily values (versus annual)}
+                  \DataTypeTok{startDate=}\StringTok{'1984-10-01'}\NormalTok{, }\CommentTok{#Start date for getting the data}
+                  \DataTypeTok{endDate =} \StringTok{'2019-9-10'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# End date (today) }
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{q_cfs =}\NormalTok{ X_}\DecValTok{00060}\NormalTok{_}\DecValTok{00003}\NormalTok{,}
+         \DataTypeTok{quality_cd =}\NormalTok{ X_}\DecValTok{00060}\NormalTok{_}\DecValTok{00003}\NormalTok{_cd) }\OperatorTok{%>%}\StringTok{ }\CommentTok{#rename long column name}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(q_cfs)) }\OperatorTok{%>%}\StringTok{ }\CommentTok{#Drop NAs which can occur when there is ice or sensor breaks}
+\StringTok{  }\KeywordTok{as_tibble}\NormalTok{() }\CommentTok{#To make it act like a tibble}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-exploring}{%
+\subsubsection{Data Exploring}\label{data-exploring}}
+
+\hypertarget{ndsi-summary}{%
+\paragraph{NDSI Summary}\label{ndsi-summary}}
+
+\begin{verbatim}
+##     DateTime              site                ndsi        
+##  Min.   :1984-04-10   Length:3208        Min.   :-0.5727  
+##  1st Qu.:1999-10-13   Class :character   1st Qu.:-0.4835  
+##  Median :2006-05-01   Mode  :character   Median :-0.4307  
+##  Mean   :2005-06-30                      Mean   :-0.2364  
+##  3rd Qu.:2013-03-17                      3rd Qu.:-0.1352  
+##  Max.   :2019-08-02                      Max.   : 0.9459
+\end{verbatim}
+
+\hypertarget{q-summary}{%
+\paragraph{Q summary}\label{q-summary}}
+
+\begin{verbatim}
+##   agency_cd           site_no             dateTime                  
+##  Length:3133        Length:3133        Min.   :2002-08-01 00:00:00  
+##  Class :character   Class :character   1st Qu.:2007-04-10 00:00:00  
+##  Mode  :character   Mode  :character   Median :2011-05-31 00:00:00  
+##                                        Mean   :2011-04-24 03:37:24  
+##                                        3rd Qu.:2015-07-21 00:00:00  
+##                                        Max.   :2019-09-10 00:00:00  
+##      q_cfs       quality_cd           tz_cd          
+##  Min.   :  53   Length:3133        Length:3133       
+##  1st Qu.: 124   Class :character   Class :character  
+##  Median : 179   Mode  :character   Mode  :character  
+##  Mean   : 243                                        
+##  3rd Qu.: 291                                        
+##  Max.   :2210
+\end{verbatim}
+
+\hypertarget{combining-the-data}{%
+\subsection{Combining the data}\label{combining-the-data}}
+
+\hypertarget{adding-a-water-year-column}{%
+\subsubsection{Adding a water year
+column}\label{adding-a-water-year-column}}
+
+When analyzing water flux data, we typically break the year up into
+``water years'' which run from October to the end of September. For this
+exploratory analysis, we want to group the datasets by water year and
+then join them to each other so we can compare winter average, max,
+median, etc\ldots{} of snow cover versus the next water year's water
+flux. So we have to add a column called water year
+
+\hypertarget{q-water-year}{%
+\paragraph{Q Water year}\label{q-water-year}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q_water_year <-}\StringTok{ }\NormalTok{q_hayman }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{month=}\KeywordTok{month}\NormalTok{(dateTime),}
+         \DataTypeTok{year_offset =} \KeywordTok{ifelse}\NormalTok{(month }\OperatorTok{>}\StringTok{ }\DecValTok{9}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+         \DataTypeTok{wtr_yr =} \KeywordTok{year}\NormalTok{(dateTime) }\OperatorTok{+}\StringTok{ }\NormalTok{year_offset)}
+
+\KeywordTok{table}\NormalTok{(q_water_year}\OperatorTok{$}\NormalTok{wtr_yr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 
+##   61  183  183  164  183  183  183  183  183  183  183  183  183  183  183 
+## 2017 2018 2019 
+##  183  183  163
+\end{verbatim}
+
+\hypertarget{ndsi-water-year}{%
+\paragraph{NDSI water year}\label{ndsi-water-year}}
+
+\begin{verbatim}
+## 
+## 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 
+##   14   34   44   66   44   48   26   34   50   56   60   60   64   60   60 
+## 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 
+##   78  106  120  134  116  128  132  132  130  114  112  128  130   90  108 
+## 2014 2015 2016 2017 2018 2019 
+##  138  116  130  114  130  102
+\end{verbatim}
+
+\hypertarget{filtering-and-summarizing}{%
+\subsubsection{Filtering and
+summarizing}\label{filtering-and-summarizing}}
+
+Now that we have our matched datasets we want to do a couple filtering
+operations. First, we want to make sure that we are only analyzing
+complete water years from the Q dataset. Second, we want to make sure we
+are only summarizing the snow data over months where snow cover is
+possible, which I would guess is between october and may. Once we have
+these filtering operations done, we want to summarize eachdataset by
+water year so we can eventually join them and see if snow cover predicts
+Q.
+
+\hypertarget{snow-water-year-summary-statistics}{%
+\paragraph{Snow water year summary
+statistics}\label{snow-water-year-summary-statistics}}
+
+\begin{verbatim}
+## # A tibble: 36 x 4
+##    wtr_yr mean_ndsi max_ndsi median_ndsi
+##     <dbl>     <dbl>    <dbl>       <dbl>
+##  1   1984   0.483      0.605      0.483 
+##  2   1985  -0.104      0.539     -0.123 
+##  3   1986  -0.130      0.436     -0.203 
+##  4   1987   0.0614     0.655      0.247 
+##  5   1988  -0.309      0.616     -0.425 
+##  6   1989  -0.398     -0.208     -0.404 
+##  7   1990  -0.269      0.524     -0.428 
+##  8   1991   0.0130     0.632     -0.0550
+##  9   1992  -0.0982     0.592     -0.272 
+## 10   1993  -0.00697    0.626     -0.0943
+## # ... with 26 more rows
+\end{verbatim}
+
+\hypertarget{wohle-q-water-year-summaries}{%
+\paragraph{Wohle Q water year
+summaries}\label{wohle-q-water-year-summaries}}
+
+\begin{verbatim}
+## # A tibble: 17 x 4
+##    wtr_yr mean_q max_q median_q
+##     <dbl>  <dbl> <dbl>    <dbl>
+##  1   2003   121.   350      102
+##  2   2004   145.   296      140
+##  3   2005   154.   241      153
+##  4   2006   222.   395      239
+##  5   2007   325.   494      350
+##  6   2008   294.   585      262
+##  7   2009   253.   667      179
+##  8   2010   251.   622      204
+##  9   2011   272.   783      179
+## 10   2012   149.   278      130
+## 11   2013   184.   332      163
+## 12   2014   280.   542      248
+## 13   2015   562.  2210      291
+## 14   2016   204.   349      204
+## 15   2017   205.   582      155
+## 16   2018   131.   281      117
+## 17   2019   355.  1010      207
+\end{verbatim}
+
+\hypertarget{plots-of-snow-cover-vs-q}{%
+\subsection{Plots of Snow Cover vs Q}\label{plots-of-snow-cover-vs-q}}
+
+\hypertarget{mean-snow-vs-median-q}{%
+\subsubsection{Mean Snow vs Median Q}\label{mean-snow-vs-median-q}}
+
+\includegraphics{../docs/SnowCoverImpacts_files/figure-latex/mean snow vs median q-1.pdf}
+
+\hypertarget{max-snow-vs.median-q}{%
+\subsubsection{Max Snow vs.~Median Q}\label{max-snow-vs.median-q}}
+
+\includegraphics{../docs/SnowCoverImpacts_files/figure-latex/max snow vs median q-1.pdf}
+
+
+\end{document}
